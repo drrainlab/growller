@@ -6,13 +6,14 @@ import (
 	"growwwler/internal/botservice"
 	"growwwler/internal/config"
 	"growwwler/internal/httpservice"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
 
 	ctx := context.Background()
-
-	done := make(chan bool)
 
 	cfg, err := config.New(ctx)
 	if err != nil {
@@ -36,6 +37,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	<-done
 
