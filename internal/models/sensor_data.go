@@ -6,9 +6,9 @@ type BoxData struct {
 	Ghum            int     `json:"ghum"`
 	Temperature     float64 `json:"temperature"`
 	CO2             int     `json:"co2"`
-	FanState        uint8   `json:"fan_state"`
-	HumidifierState uint8   `json:"humidifier_state"`
-	PumpState       uint8   `json:"pump_state"`
+	FanState        bool    `json:"fan_state"`
+	HumidifierState bool    `json:"humidifier_state"`
+	PumpState       bool    `json:"pump_state"`
 	Time            string  `json:"time"`
 	Phase           string  `json:"phase"`
 }
