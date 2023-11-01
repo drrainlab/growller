@@ -64,7 +64,7 @@ func NewHTTPService(cfg *Config, tgBot botservice.IBotService) (*HTTPService, er
 
 	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 	r.HandleFunc("/data", func(w http.ResponseWriter, r *http.Request) {
-		var sensorData models.SensorData
+		var boxData models.BoxData
 		raw, err := io.ReadAll(r.Body)
 		if err != nil {
 			log.Println("err reading body: ", err)
@@ -72,18 +72,18 @@ func NewHTTPService(cfg *Config, tgBot botservice.IBotService) (*HTTPService, er
 			return
 		}
 		fmt.Println(string(raw))
-		json.Unmarshal(raw, &sensorData)
+		json.Unmarshal(raw, &boxData)
 		tgmsg := fmt.Sprintf(`
 			time: %s
 			temperature: %.2f
 			humidity: %.2f
 			co2: %d
 			ghum: %d
-		`, sensorData.Time,
-			sensorData.Temperature,
-			sensorData.Humidity,
-			sensorData.CO2,
-			sensorData.Ghum,
+		`, boxData.Time,
+			boxData.Temperature,
+			boxData.Humidity,
+			boxData.CO2,
+			boxData.Ghum,
 		)
 
 		if err = tgBot.SendMessage(tgmsg); err != nil {

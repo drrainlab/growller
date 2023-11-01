@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"growwwler/internal/botservice"
 	"growwwler/internal/config"
 	"growwwler/internal/httpservice"
@@ -42,7 +41,4 @@ func main() {
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	<-done
-
-	fmt.Println(cfg.BotConfig)
-
 }
