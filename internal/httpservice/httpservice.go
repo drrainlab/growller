@@ -79,11 +79,17 @@ func NewHTTPService(cfg *Config, tgBot botservice.IBotService) (*HTTPService, er
 			humidity: %.2f
 			co2: %d
 			ghum: %d
+			fan on: %t
+			humidifier on: %t
+			pump on: %t
 		`, boxData.Time,
 			boxData.Temperature,
 			boxData.Humidity,
 			boxData.CO2,
 			boxData.Ghum,
+			boxData.FanState,
+			boxData.HumidifierState,
+			boxData.PumpState,
 		)
 
 		if err = tgBot.SendMessage(tgmsg); err != nil {
