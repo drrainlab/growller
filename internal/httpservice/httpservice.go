@@ -61,9 +61,7 @@ func NewHTTPService(cfg *Config, tgBot botservice.IBotService) (*HTTPService, er
 	// }
 
 	r := mux.NewRouter()
-
-	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
-	r.HandleFunc("/data", func(w http.ResponseWriter, r *http.Request) {
+	r.Methods("POST").Path("/data").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var boxData models.BoxData
 		raw, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -102,6 +100,7 @@ func NewHTTPService(cfg *Config, tgBot botservice.IBotService) (*HTTPService, er
 
 		w.WriteHeader(200)
 	})
+	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 
 	middle := r
 	// r.Use(handler.CORS)
