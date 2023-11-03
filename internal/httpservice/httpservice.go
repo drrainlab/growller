@@ -62,6 +62,7 @@ func NewHTTPService(cfg *Config, tgBot botservice.IBotService) (*HTTPService, er
 
 	r := mux.NewRouter()
 	r.Methods("POST").Path("/data").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("got data")
 		var boxData models.BoxData
 		raw, err := io.ReadAll(r.Body)
 		if err != nil {
